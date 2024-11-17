@@ -1,14 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
 import { RoleService } from "./role.service";
 import { CreateRoleDTO, RoleResponse } from "./dto/role.model";
 import { WebModel } from "../model/web.model";
+import { RoleGuard } from "src/common/role.guard";
+import { Roles } from "src/common/role.decorator";
 
+@UseGuards(RoleGuard)
 @Controller('/api/role')
 export class RoleController {
     constructor(
         private roleService: RoleService
     ) {}
 
+    @Roles('Admin')
     @Post('/create-role')
     @HttpCode(201)
     async create(
@@ -22,6 +26,7 @@ export class RoleController {
         }
     }
     
+    @Roles('Admin')
     @Put('/update-role/:id')
     @HttpCode(200)
     async update(
@@ -36,6 +41,7 @@ export class RoleController {
         }
     }
 
+    @Roles('Admin')
     @Delete('/delete-role/:id')
     @HttpCode(200)
     async remove(
@@ -49,6 +55,7 @@ export class RoleController {
         }
     }
 
+    @Roles('Admin')
     @Get('/view')
     @HttpCode(200)
     async list(): Promise<WebModel<RoleResponse[]>> {
@@ -60,6 +67,7 @@ export class RoleController {
         }
     }
 
+    @Roles('Admin')
     @Get('/view/:id')
     @HttpCode(200)
     async get(

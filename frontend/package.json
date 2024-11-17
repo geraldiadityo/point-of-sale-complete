@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "chart.js": "^4.4.6",
+    "cheerio": "^1.0.0",
+    "encoding": "^0.1.13",
+    "jose": "^5.9.6",
+    "next": "14.2.5",
+    "primereact": "^10.8.4",
+    "quill": "^2.0.2",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "react-tooltip": "^5.28.0",
+    "sweetalert2": "^11.14.5",
+    "universal-cookie": "^7.2.2"
   },
   "devDependencies": {
     "postcss": "^8",

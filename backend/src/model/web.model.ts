@@ -4,4 +4,5 @@ export class WebModel<T> {
     totalPages?: number;
     currentPage?: number;
     totalItem?: number;
+    token?: string;
 }

@@ -1,21 +1,68 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+.table-primary{
+    @apply border-none text-xs
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.table-primary td, .table-primary th{
+    @apply border-b border-b-tiffany-blue-light;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.table-primary th{
+    @apply p-3 text-left;
+}
+
+.table-primary td{
+    @apply p-3;
+}
+
+.table-primary tr:nth-child(even){
+    @apply bg-tiffany-blue-light/25
+}
+
+
+.btn-base {
+    @apply hover:bg-opacity-75 rounded-full px-5 py-1 inline-block text-white font-bold lg:text-sm drop-shadow;
+}
+
+/* Button Primary */
+.btn-primary{
+    @apply bg-vivid-cerulean hover:bg-opacity-75 rounded-full px-5 py-1 inline-block text-white font-bold lg:text-sm drop-shadow;
+}
+
+.btn-secondary{
+    @apply bg-gunmetal hover:bg-opacity-75 rounded-full px-5 py-1 inline-block text-white font-bold lg:text-sm drop-shadow;
+}
+
+.p-autocomplete .p-autocomplete-input{
+    @apply border border-gray-300 px-2 py-1;
+}
+
+.caridokter.p-autocomplete{
+    @apply w-full;
+}
+
+.caridokter.p-autocomplete .p-inputtext{
+    @apply w-full;
+}
+
+/* password */
+.p-password-input {
+    @apply border border-gray-300 px-2 py-1;
+}
+
+/* dropdown */
+.p-dropdown-filter-container{
+    @apply border border-gray-300 px-2 py-1;
+}
+
+.p-button {
+    @apply bg-vivid-cerulean hover:bg-opacity-75 rounded-full px-5 py-1 text-white font-bold lg:text-sm drop-shadow;
 }
