@@ -4,6 +4,8 @@ import { RoleModule } from './role/role.module';
 import { PegawaiModule } from './pegawai/pegawai.module';
 import { PenggunaModule } from './pengguna/pengguna.module';
 import { AuthModule } from './auth/auth.module';
+import { KategoriModule } from './barang/kategori/kategori.module';
+import { SatuanModule } from './barang/satuan/satuan.module';
 
 @Module({
   imports: [
@@ -11,7 +13,9 @@ import { AuthModule } from './auth/auth.module';
     RoleModule,
     PegawaiModule,
     PenggunaModule,
-    AuthModule
+    AuthModule,
+    KategoriModule,
+    SatuanModule
   ],
   controllers: [],
   providers: [],

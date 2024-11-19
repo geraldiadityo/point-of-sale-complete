@@ -44,3 +44,33 @@ model Pengguna {
 
   @@map("pengguna")
 }
+
+// barang
+model Satuan_barang {
+  id Int @id @default(autoincrement())
+  nama_satuan String @db.VarChar(100)
+  barang Barang[]
+
+  @@map("satuan_barang")
+}
+
+model Kategori_barang {
+  id Int @id @default(autoincrement())
+  nama_kategori String
+  barang Barang[]
+
+  @@map("katori_barang")
+}
+
+model Barang {
+  id Int @id @default(autoincrement())
+  kode_barang String
+  nama_barang String
+  satuanId Int
+  satuan Satuan_barang @relation(fields: [satuanId], references: [id], onDelete: Cascade)
+  kategoriId Int
+  kategori Kategori_barang @relation(fields: [kategoriId],  references: [id], onDelete: Cascade)
+
+  @@map("barang")
+}
+

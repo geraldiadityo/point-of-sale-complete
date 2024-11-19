@@ -53,8 +53,10 @@ const Nav = ({}) => {
                                 submenu={true}
                                 subMenuItems={[
                                     { title: 'Data Pegawai', href:"/pegawai" },
-                                    // { title: 'Data Pengguna', href:"/pengguna" },
+                                    { title: 'Data Pengguna', href:"/pengguna" },
                                     { title: 'Data Role', href:"/role" },
+                                    { title: 'Data Kategori', href:"/kategori" },
+                                    { title: 'Data Satuan', href:"/satuan" }
                                 ]}
                             />
                         </>
