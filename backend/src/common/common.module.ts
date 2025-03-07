@@ -8,6 +8,7 @@ import { ValidationService } from "./validation.service";
 import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { ErrorFilter } from "./error.filter";
 import { AuthMiddleware } from "./auth.middleware";
+import { ScheduleModule } from "@nestjs/schedule";
 @Global()
 @Module({
     imports: [
@@ -24,7 +25,8 @@ import { AuthMiddleware } from "./auth.middleware";
         ThrottlerModule.forRoot([{
             ttl: 6000,
             limit: 10
-        }])
+        }]),
+        ScheduleModule.forRoot(),
     ],
     providers: [
         PrismaService,

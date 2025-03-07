@@ -5,6 +5,7 @@ import { SatuanController } from "./satuan.controller";
 
 @Module({
     providers: [SatuanRepository, SatuanService],
-    controllers: [SatuanController]
+    controllers: [SatuanController],
+    exports: [SatuanService],
 })
 export class SatuanModule {}

@@ -5,6 +5,7 @@ import { KateoriController } from "./kategori.controller";
 
 @Module({
     providers: [KategoriService, KategoriRepository],
-    controllers: [KateoriController]
+    controllers: [KateoriController],
+    exports: [KategoriService],
 })
 export class KategoriModule {}

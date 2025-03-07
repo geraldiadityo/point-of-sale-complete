@@ -6,7 +6,16 @@ async function truncateAllTables() {
     const modelToTruncate = [
         'role',
         'pegawai',
-        'pengguna'
+        'pengguna',
+        'satuan_barang',
+        'katori_barang',
+        'barang',
+        'supplier',
+        'stok',
+        'transaksi',
+        'detail_transaksi',
+        'batch_barang',
+
     ];
 
     for (const item of modelToTruncate){

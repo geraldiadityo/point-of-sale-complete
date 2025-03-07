@@ -14,63 +14,165 @@ datasource db {
 }
 
 model Role {
-  id Int @id @default(autoincrement())
-  nama_role String @db.VarChar(100)
-  pengguna Pengguna[]
+  id        Int        @id @default(autoincrement())
+  nama_role String     @db.VarChar(100)
+  pengguna  Pengguna[]
 
   @@map("role")
 }
 
 model Pegawai {
-
-  id Int @id @default(autoincrement())
-  nk String @db.VarChar(100) @unique
-  nik String @db.VarChar(20) @unique
-  nama_lengkap String @db.VarChar(200)
-  alamat String @db.Text
-  Pengguna Pengguna[]
+  id           Int        @id @default(autoincrement())
+  nk           String     @unique @db.VarChar(100)
+  nik          String     @unique @db.VarChar(20)
+  nama_lengkap String     @db.VarChar(200)
+  alamat       String     @db.Text
+  Pengguna     Pengguna[]
 
   @@map("pegawai")
 }
 
 model Pengguna {
-  username String @db.VarChar(100) @unique
-  password String @db.VarChar(200)
+  username  String  @unique @db.VarChar(100)
+  password  String  @db.VarChar(200)
   pegawaiId Int
-  pegawai Pegawai @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
-  roleId Int
-  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  status Boolean @default(true)
+  pegawai   Pegawai @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+  roleId    Int
+  role      Role    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  status    Boolean @default(true)
 
   @@map("pengguna")
 }
 
 // barang
 model Satuan_barang {
-  id Int @id @default(autoincrement())
-  nama_satuan String @db.VarChar(100)
-  barang Barang[]
+  id          Int      @id @default(autoincrement())
+  nama_satuan String   @db.VarChar(100)
+  barang      Barang[]
 
   @@map("satuan_barang")
 }
 
 model Kategori_barang {
-  id Int @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   nama_kategori String
-  barang Barang[]
+  barang        Barang[]
 
   @@map("katori_barang")
 }
 
 model Barang {
-  id Int @id @default(autoincrement())
-  kode_barang String
-  nama_barang String
-  satuanId Int
-  satuan Satuan_barang @relation(fields: [satuanId], references: [id], onDelete: Cascade)
-  kategoriId Int
-  kategori Kategori_barang @relation(fields: [kategoriId],  references: [id], onDelete: Cascade)
+  id               Int                @id @default(autoincrement())
+  kode_barang      String
+  nama_barang      String
+  satuanId         Int
+  satuan           Satuan_barang      @relation(fields: [satuanId], references: [id], onDelete: Cascade)
+  kategoriId       Int
+  kategori         Kategori_barang    @relation(fields: [kategoriId], references: [id], onDelete: Cascade)
+  batch            Batch[]
+  detail_transaksi Detail_transaksi[]
+  keranjang        Keranjang[]
 
   @@map("barang")
 }
 
+model Batch {
+  nomor            String             @id @unique
+  barangId         Int
+  barang           Barang             @relation(fields: [barangId], references: [id])
+  stok             Int
+  harga_beli       Int
+  harga_jual       Int
+  expirate_date    DateTime
+  status           Boolean            @default(true)
+  detail_transaksi Detail_transaksi[]
+  stok_barang      Stok[]
+
+  @@map("batch_barang")
+}
+
+enum TypeStok {
+  IN
+  OUT
+}
+
+model Stok {
+  id          Int      @id @default(autoincrement())
+  nomor_batch String
+  batch       Batch    @relation(fields: [nomor_batch], references: [nomor], onDelete: Cascade)
+  type        TypeStok
+  qty         Int
+  keterangan  String
+  tanggal     DateTime
+
+  @@map("stok")
+}
+
+// supplier
+model Supplier {
+  id            Int     @id @default(autoincrement())
+  nama_supplier String  @db.VarChar(200)
+  nomor_telp    String  @db.VarChar(200)
+  alamat        String  @db.Text
+  deskripsi     String?
+
+  transaksi Transaksi[]
+
+  @@map("supplier")
+}
+
+// transaksi
+model Transaksi {
+  id                  Int                @id @default(autoincrement())
+  nomor_faktur        String             @unique
+  tanggal_faktur      DateTime
+  tanggal_terima      DateTime
+  tanggal_jatuh_tempo DateTime
+  supplierId          Int
+  supplier            Supplier           @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  keterangan          String?            @db.Text
+  total_bayar         Int
+  status_bayar        Boolean            @default(false)
+  status              Boolean            @default(false)
+  created_at          DateTime           @default(now())
+  updated_at          DateTime           @updatedAt
+  deleted_at          DateTime?
+  detail_transaksi    Detail_transaksi[]
+  keranjang           Keranjang[]
+
+  @@map("transaksi")
+}
+
+model Keranjang {
+  id           Int       @id @default(autoincrement())
+  transaksiId  Int
+  transaksi    Transaksi @relation(fields: [transaksiId], references: [id])
+  nomor_batch  String
+  barangId     Int
+  barang       Barang    @relation(fields: [barangId], references: [id])
+  qty          Int
+  harga_beli   Int
+  harga_jual   Int
+  total_harga  Int
+  expired_date DateTime
+  tanggal      DateTime
+
+  @@map("keranjang_transaksi")
+}
+
+model Detail_transaksi {
+  id            Int       @id @default(autoincrement())
+  transaksiId   Int
+  transaksi     Transaksi @relation(fields: [transaksiId], references: [id])
+  barangId      Int
+  barang        Barang    @relation(fields: [barangId], references: [id])
+  nomor_batch   String
+  batch         Batch     @relation(fields: [nomor_batch], references: [nomor])
+  expirate_date DateTime
+  qty           Int
+  harga_beli    Int
+  harga_jual    Int
+  tanggal       DateTime
+
+  @@map("detail_transaksi")
+}

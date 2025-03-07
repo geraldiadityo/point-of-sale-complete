@@ -66,3 +66,27 @@
 .p-button {
     @apply bg-vivid-cerulean hover:bg-opacity-75 rounded-full px-5 py-1 text-white font-bold lg:text-sm drop-shadow;
 }
+
+.p-button {
+    @apply bg-vivid-cerulean hover:bg-opacity-75 rounded-full px-5 py-1 text-white font-bold lg:text-sm drop-shadow;
+}
+
+/*checkbox*/
+.p-checkbox-box{
+    @apply border rounded-lg;
+}
+
+/*Input Text*/
+.p-inputtext{
+    @apply rounded-md border border-x-tiffany-blue-light px-2 py-1 text-xs;
+}
+
+/* Radio Button */
+.p-radiobutton-box{
+    @apply border border-gray-600;
+}
+
+/* Calender */
+.p-calender .p-inputtext{
+    @apply border border-x-tiffany-blue-light;
+}
