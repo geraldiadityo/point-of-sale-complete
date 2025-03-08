@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Delete, Get, HttpCode, Param, ParseIntPipe } from "@nestjs/common";
 import { KeranjangService } from "./keranjang.service";
 import { WebModel } from "src/model/web.model";
 import { KeranjangResponse, KeranjangResponseEx } from "./dto/keranjang.model";
@@ -19,6 +19,19 @@ export class KeranjangController {
         return {
             data: result,
             message: 'success'
+        }
+    }
+
+    @Delete('/remove-item/:id')
+    @HttpCode(200)
+    async removeItem(
+        @Param('id', ParseIntPipe) id: number
+    ): Promise<WebModel<boolean>> {
+        await this.keranjangService.removeItem(id);
+
+        return {
+            data: true,
+            message: 'item was remove'
         }
     }
 }

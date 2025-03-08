@@ -74,6 +74,16 @@ export class TransaksiService {
         return listTransaksi.map((item) => this.toTransaksiResponse(item));
     }
 
+    async listAllFinalLunasToday(): Promise<TransaksiResponse[]> {
+        const today = new Date();
+        const startDate = new Date(today.setHours(0,0,0,0));
+        const endDate = new Date(today.setHours(23,59,59,999));
+
+        const listTransaksi = await this.transaksiRepository.dataTransaksiAll(startDate, endDate);
+
+        return listTransaksi.map((item) => this.toTransaksiResponse(item));
+    }
+
     async listByStatus(
         take: number,
         skip: number,

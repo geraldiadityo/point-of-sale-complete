@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { terbilang } from "@/utils/function";
 import useDebounce from "@/hooks/useDebounce";
 import TableDetailTransaksi from "./DetailTransaksi";
+import { Tooltip } from "react-tooltip";
 
 const HistoryRekanan = () => {
     const [batalTransaksiSignal, setBatalTransaksiSignal] = useState([]);
@@ -375,6 +376,41 @@ const HistoryRekanan = () => {
         show_search_input: false
     }
 
+    const deleteKeranjangHandler = async (e,val) => {
+        e.preventDefault();
+        const res = await fetch(`${backendhost}/api/keranjang/remove-item/${val.id}`, {
+            method: 'DELETE',
+            headers: await headers()
+        });
+
+        if(!res.ok){
+            return;
+        }
+
+        const filterdData = dataDetailTable.data.filter((item) => item.id !== val.id);
+        let total = 0;
+        filterdData.map((item) => {
+            total += item.qty * item.harga_beli;
+        });
+
+        setDataDetailTable({...dataDetailTable, data: [...filterdData]});
+        setTotalDetailData(total)
+    }
+
+    const opsiDataDetail = (val) => {
+        return (
+            <td>
+                <div className="flex justify-center">
+                    <div className="">
+                        <p className="hapus px-1 cursor-pointer text-orang-950 hover:text-flame" onClick={(e) => deleteKeranjangHandler(e,val)}><i className="bi bi-trash"></i></p>
+                        <Tooltip anchorSelect=".hapus" place="top">Hapus</Tooltip>
+                    </div>
+                </div>
+            </td>
+            
+        )
+    }
+
     const opsi = (val) => {
         if(finalTab === 0){
             return (
@@ -476,6 +512,7 @@ const HistoryRekanan = () => {
                     details={dataDetailTable}
                     filter={filterDataDetailFunc}
                     options={options}
+                    action={opsiDataDetail}
                     total={totalDetailData}
                 />
             </Dialog>

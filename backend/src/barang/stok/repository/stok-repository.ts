@@ -73,7 +73,10 @@ export class StokRepository {
                 tanggal: true
             },
             take: take,
-            skip: skip
+            skip: skip,
+            orderBy: {
+                tanggal: 'desc'
+            }
         });
     }
 

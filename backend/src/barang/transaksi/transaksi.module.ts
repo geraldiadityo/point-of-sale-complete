@@ -10,5 +10,6 @@ import { StokModule } from "../stok/stok.module";
     imports: [BatchModule, KeranjangModule, StokModule],
     providers: [TransaksiRepository, TransaksiService],
     controllers: [TransaksiController],
+    exports: [TransaksiService]
 })
 export class TransaksiModule {}

@@ -67,6 +67,44 @@ export class TransaksiRepository {
         })
     }
 
+    async dataTransaksiAll(
+        startDate: Date,
+        endDate: Date
+    ): Promise<TransaksiResponse[]> {
+        return await this.prismaService.transaksi.findMany({
+            where: {
+                AND: [
+                    {
+                        status: true,
+                    },
+                    {
+                        status_bayar: true,
+                    },
+                    {
+                        deleted_at: null
+                    },
+                    {
+                        tanggal_faktur: {
+                            gte: startDate,
+                            lt: endDate
+                        }
+                    }
+                ]
+            },
+            select: {
+                id: true,
+                nomor_faktur: true,
+                tanggal_faktur: true,
+                tanggal_terima: true,
+                tanggal_jatuh_tempo: true,
+                supplier: true,
+                status_bayar: true,
+                total_bayar: true,
+                status: true,
+            }
+        })
+    }
+
     async listTransaksiByStatus(
         take: number,
         skip: number,

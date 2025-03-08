@@ -64,4 +64,12 @@ export class KeranjangService {
         return listData;
     };
 
+    async removeItem(
+        id: number
+    ): Promise<KeranjangResponse> {
+        const removeItem = await this.keranjangRepository.remove(id);
+
+        return removeItem
+    }
+
 }

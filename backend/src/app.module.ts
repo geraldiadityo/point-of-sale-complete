@@ -12,10 +12,12 @@ import { BatchModule } from './barang/batch/batch.module';
 import { TransaksiModule } from './barang/transaksi/transaksi.module';
 import { KeranjangModule } from './barang/keranjang/keranjang.module';
 import { StokModule } from './barang/stok/stok.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
     CommonModule,
+    DashboardModule,
     RoleModule,
     PegawaiModule,
     PenggunaModule,

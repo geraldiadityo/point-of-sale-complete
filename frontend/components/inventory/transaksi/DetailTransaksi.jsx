@@ -8,7 +8,8 @@ const TableDetailTransaksi = ({
     details,
     filter,
     options,
-    total
+    total,
+    action
  }) => {
     return (
         <div className="">
@@ -84,7 +85,7 @@ const TableDetailTransaksi = ({
                                     filterFunc={filter}
                                     pagination={false}
                                     options={options}
-                                    action={(val) => <td></td>}
+                                    action={rekanan.data.transaksi.status ? (val) => <td></td> : action}
                                 />
                             )}
                         </div>
